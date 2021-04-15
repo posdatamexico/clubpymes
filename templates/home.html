@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div fxFlex class="card" style="margin-left: 20px; margin-top: 150px;">
+  {% for publicacion in object_list %}
+  <div class="card-title">
+      <h3><a style="text-decoration: none;" href="{% url 'detail' publicacion.pk %}">{{publicacion.titulo}}</a></h3>
+  </div>
+    <div clas="card-text">
+      <p>{{publicacion.descripcion}}</p>
+      <a style="text-decoration: none;" href="{% url 'seccion' publicacion.seccion|slugify %}"><p>{{ publicacion.seccion }}</p></a>
+    </div>
+    <div class="card-text">
+      <p style="text-decoration: none;">by- {{publicacion.autor}}</p> 
+
+        {% if user.is_authenticated %}
+          {% if user.id == publicacion.autor.id %}
+              <a style="text-decoration: none;" href="{% url 'edit' publicacion.pk %}">Editar</a>
+              <span>
+              <a style="text-decoration: none;" href="{% url 'delete' publicacion.pk %}">Borrar</a></span>
+            {% endif %}
+        {% endif %}
+        <br/>
+    
+    </div>
+       <div class="card" style="width: 400px;">
+         <img  src="{{ publicacion.publicacionImage.url }}">
+       </div>
+       <br/>
+      {% endfor %}
+</div>
+
+{% endblock %}
+
+ 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% if seccion_publicacion %}
+		<h1 style="margin-top: 120px; margin-left: 30px;">{{ secs }}</h1>
+		<ul>
+		{% for publicacion in seccion_publicacion %}
+			<li><a href="{% url 'detail' publicacion.pk %}">{{ publicacion.titulo }}</a>
+
+				<span>---{{ publicacion.seccion }}</span>
+				<p>{{ publicacion.descripcion }}</p>
+				by-{{ publicacion.autor }}
+			<small>{{ publicacion.fecha }}</small>
+			</li>
+		{% endfor %}
+		</ul>
+{% else %}
+	<p>Lo siento esta pagina no existe.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+<h1>SECCIONES</h1>
+
+
+{% block content %}
+	
+	<div class="card" style="margin-left: 30px;">
+		{% for item in seccion_menu_list %}
+			<a style="text-decoration: none;" class="dropdown-item" href="{% url 'seccion' item|slugify %}"><h2>{{ item }}</h2></a></h5>
+
+		{% endfor %}
+	</div>
+{% endblock content %}

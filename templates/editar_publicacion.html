@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block tittle %} Editar mi historia {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+	{% if user.id  == publicacion.autor.id %}
+		<h1>Editar o actualizar publicacion...</h1>
+		<br/><br/>
+		
+		<div class="form-group" style="margin-left: 30px;">
+			<form method="POST">{% csrf_token %}
+
+			{{ form.media }}
+			{{ form.as_p }}
+
+			<button class="btn btn-warning">Actualizar</button>
+			</form>
+		</div>
+	{% else %}
+		No tienes permitido estar aqui.
+	{% endif %}
+{% else %}
+
+No tienes permitido estar aqui...(y lo sabes)
+
+{% endif %}
+
+{% endblock %}

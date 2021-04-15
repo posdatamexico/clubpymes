@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{ publicacion.titulo }}{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top: 150px;">
+<h1>{{ publicacion.titulo }}</h1>
+	<small>By: {{ publicacion.autor }}</small> 
+	<span>{{ publicacion.fecha }}</span>
+	{% if user.is_authenticated %}
+		{% if user.id == publicacion.autor.id %}
+		<a href="{% url 'edit' publicacion.pk %}">Editar</a>
+		<a href="{% url 'delete' publicacion.pk %}">Borrar</a>
+		{% endif %}
+	{% endif %}
+<hr>
+<br/>
+	<div class="card" style="display: flex;"><img src="{{ publicacion.publicacionImage.url }}"></div><br/><br/>
+<br/><br/>
+<strong>{{ publicacion.descripcion }}</strong>
+<hr>
+	<p style="text-align: justify;">{{ publicacion.contenido|safe }}</p>
+</div>
+<br/><br/>
+<a style="margin-left: 20px;" href="{% url 'home' %}" clas="btn btn-primary">Regresar</a>
+
+<br/><br/>
+<hr>
+<br/>
+<form style="margin-left: 30px;" action="{% url 'like' publicacion.pk %}" method="POST">{% csrf_token %}
+	{% if user.is_authenticated %}
+		{% if liked %}
+			<button type="submit", name="publicacion_id", value="{{ publicacion.id }}", class="btn btn-danger btn-sm">Unlike</button>
+		{% else %}
+			<button type="submit", name="publicacion_id", value="{{ publicacion.id }}", class="btn btn-primary btn-sm">Like</button><span> - {{ total_likes }}</span>
+		{% endif %}
+	{% else %}
+		<small>   <a class="nav-link" href="{% url 'login' %}">Login</a>Debes estar inscrito para dar likes</small>
+	{% endif %}
+</form>
+
+{% endblock %}
